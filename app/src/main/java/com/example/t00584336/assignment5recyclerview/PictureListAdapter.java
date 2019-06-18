@@ -14,6 +14,11 @@ import java.util.ArrayList;
 public class PictureListAdapter extends
         RecyclerView.Adapter<PictureListAdapter.PictureViewHolder> {
 
+    public static final String ITEM_IMAGE_KEY = "ITEM_IMAGE_KEY";
+    public static final String ITEM_NAME_KEY = "ITEM_NAME_KEY";
+    public static final String ITEM_ID_KEY = "0";
+    public static final String  ITEM_PRIORITY_KEY = "0";
+
     private LayoutInflater mInflater;
     private final ArrayList<Item> mPictureList;
     private Context mcontext;
@@ -47,16 +52,18 @@ public class PictureListAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull final PictureViewHolder holder, final int position) {
-        final Item Current = mPictureList.get(position);
-        holder.pictureItemView.setImageResource(Current.getImageId());
+        final Item currentItem = mPictureList.get(position);
+        holder.pictureItemView.setImageResource(currentItem.getImageId());
 
         holder.pictureItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (mcontext, DetailActivity.class);
-                //intent.putParcelableArrayListExtra("image", mPictureList);
+                intent.putExtra(ITEM_IMAGE_KEY, currentItem.getImage());
+                intent.putExtra(ITEM_NAME_KEY, currentItem.getName());
+                intent.putExtra(ITEM_ID_KEY, currentItem.getImageId());
+                intent.putExtra(ITEM_PRIORITY_KEY, currentItem.getPriority());
                 mcontext.startActivity(intent);
-                //intent.putStringArrayListExtra("Image", mPictureList[holder.getAdapterPosition()]);
             }
         });
 

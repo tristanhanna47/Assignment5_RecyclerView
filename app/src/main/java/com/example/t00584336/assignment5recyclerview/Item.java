@@ -1,9 +1,6 @@
 package com.example.t00584336.assignment5recyclerview;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-class Item implements Parcelable {
+class Item implements Comparable<Item> {
     private String name;
     private String image;
     private int priority;
@@ -13,7 +10,7 @@ class Item implements Parcelable {
         super();
     }
 
-    public Item(String name, String Image) {
+    public Item(String name, String image) {
         this.name = name;
         this.image = image;
     }
@@ -51,30 +48,19 @@ class Item implements Parcelable {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
+    public int compareTo(Item item) {
 
-    public Item(Parcel source) {
-        name = source.readString();
-        image = source.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(image);
-    }
-
-    public static final Creator<Item> CREATOR = new Creator<Item>() {
-        @Override
-        public Item createFromParcel(Parcel source) {
-            return new Item(source);
+        if (this.priority == item.getPriority())
+        {
+            return 0;
         }
-
-        @Override
-        public Item[] newArray(int size) {
-            return new Item[0];
+        else if (this.priority < item.getPriority())
+        {
+            return 1;
         }
-    };
+        else
+        {
+            return -1;
+        }
+    }
 }
